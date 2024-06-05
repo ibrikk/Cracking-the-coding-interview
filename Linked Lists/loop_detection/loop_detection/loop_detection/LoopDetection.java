@@ -1,5 +1,3 @@
-package loop_detection;
-
 public class LoopDetection {
     public static void main(String[] args) {
         Node a = new Node("A");
