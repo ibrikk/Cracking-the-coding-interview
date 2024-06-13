@@ -108,6 +108,10 @@ class LinkedList {
         if (head == null) {
             return;
         }
+        if (head.data == data) {
+            head = head.next;
+            return;
+        }
         Node curr = head;
         while (curr.next != null) {
             if (curr.data == data) {
