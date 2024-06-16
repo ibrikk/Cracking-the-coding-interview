@@ -1,5 +1,3 @@
-package intersecting;
-
 public class Intersecting {
     public static void main(String[] args) {
         // Creating nodes for the first linked list
