@@ -20,7 +20,7 @@ public class Quicksort {
     System.out.println();
   }
 
-  public static void quickSort(int[] arr, int low, int high) {
+  private static void quickSort(int[] arr, int low, int high) {
     if (low < high) {
       int partitionIndex = partition(arr, low, high);
 
@@ -31,7 +31,7 @@ public class Quicksort {
 
   private static int partition(int[] arr, int low, int high) {
     int i = low - 1;
-    int pivot = arr[high];
+    int pivot = high;
 
     for (int j = low; j < high; j++) {
       if (arr[j] <= pivot) {
@@ -43,7 +43,7 @@ public class Quicksort {
     }
 
     int temp = arr[i + 1];
-    arr[i + 1] = pivot;
+    arr[i + 1] = arr[high];
     arr[high] = temp;
 
     return i + 1;
