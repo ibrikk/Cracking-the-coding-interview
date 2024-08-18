@@ -1,4 +1,15 @@
 import java.util.ArrayList;
+import java.util.HashSet;
+
+class Point {
+  int x;
+  int y;
+
+  Point(int x, int y) {
+    this.x = x;
+    this.y = y;
+  }
+}
 
 public class RobotInAGrid {
   public static void main(String[] args) {
@@ -48,14 +59,45 @@ public class RobotInAGrid {
     return false;
   }
 
-}
+  /////// OPTIMIZED WITH MEOIZATION
 
-class Point {
-  int x;
-  int y;
-
-  Point(int x, int y) {
-    this.x = x;
-    this.y = y;
+  ArrayList<Point> getPathOptimized(boolean[][] maze) {
+    if (maze == null || maze.length == 0) {
+      return null;
+    }
+    ArrayList<Point> path = new ArrayList<>();
+    HashSet<Point> failedPoints = new HashSet<>();
+    if (getPathOptimized(maze, maze.length - 1, maze[0].length - 1, path, failedPoints)) {
+      return path;
+    }
+    return null;
   }
+
+  boolean getPathOptimized(boolean[][] maze, int row, int col, ArrayList<Point> path, HashSet<Point> failedPoints) {
+    // If out of bounds, return false
+    if (col < 0 || row < 0 || !maze[row][col]) {
+      return false;
+    }
+    Point p = new Point(row, col);
+
+    // If we have already visited this cell, return
+    if (failedPoints.contains(p)) {
+      return false;
+    }
+
+    boolean isAtOrigin = row == 0 && col == 0;
+
+    // If there is a path from start location to my current location, add my
+    // location
+
+    if (isAtOrigin || getPathOptimized(maze, row, col - 1, path, failedPoints)
+        || getPathOptimized(maze, row - 1, col, path, failedPoints)) {
+      path.add(p);
+      return true;
+    }
+
+    failedPoints.add(p); // Cache result
+    return false;
+  }
+
 }
