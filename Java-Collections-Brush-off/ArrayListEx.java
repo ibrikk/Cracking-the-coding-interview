@@ -42,5 +42,13 @@ public class ArrayListEx {
 
     System.out.println(c.equals(e));
 
+
+    Integer[] x = {1, 2, 3, 4, 5, 6};
+    ArrayList<Integer> y = new ArrayList<>(Arrays.asList(x));
+
+    Integer[] z = y.toArray(new Integer[y.size()]);
+    for (Integer i : z) {
+      System.out.print(i);
+    }
   }
 }
