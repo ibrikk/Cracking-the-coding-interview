@@ -50,6 +50,13 @@ public class LinkedListEx {
     Integer[] d = {1, 2, 3, 4};
     LinkedList<Integer> lli = new LinkedList<>();
     lli.addAll(Arrays.asList(d));
+    ll.offer(9); // queue
+    System.out.println(ll);
+
+    ll.poll(); // queue
+    System.out.println(ll);
+    ll.add(null);
+    System.out.println(ll);
   }
 
 }
