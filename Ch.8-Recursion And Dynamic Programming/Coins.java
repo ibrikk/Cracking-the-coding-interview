@@ -3,7 +3,7 @@ public class Coins {
     int result = makeChange(100);
     System.out.println(result);
 
-    int result2 = makeChangeOpt(100);
+    int result2 = makeChangeOpt(10);
     System.out.println(result2);
   }
 
