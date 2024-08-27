@@ -15,6 +15,10 @@ public class StackOfBoxes {
     // Call the createStackOpt method (optimized version)
     int maxHeightOpt = createStackOpt(boxes);
     System.out.println("Max height of the stack using createStackOpt: " + maxHeightOpt);
+
+    // Call Solution 2
+    int maxHeight2 = createStack2(boxes);
+    System.out.println("Max height of the stack using createStack2: " + maxHeight2);
   }
 
   private static int createStack(ArrayList<Box> boxes) {
@@ -69,6 +73,33 @@ public class StackOfBoxes {
     return Math.max(heightWithBottom, heightWithoutBottom);
   }
 
+  /* Solution 2 */
+
+  private static int createStack2(ArrayList<Box> boxes) {
+    Collections.sort(boxes, new BoxComparator());
+    int[] stackMap = new int[boxes.size()];
+    return createStack2(boxes, null, 0, stackMap);
+  }
+
+  private static int createStack2(ArrayList<Box> boxes, Box bottom, int offset, int[] stackMap) {
+    if (offset >= boxes.size())
+      return 0;
+    /* height with this bottom */
+    Box newBottom = boxes.get(offset);
+    int heightWithBottom = 0;
+    if (bottom == null || newBottom.canBeAbove(bottom)) {
+      if (stackMap[offset] == 0) {
+        stackMap[offset] = createStack2(boxes, newBottom, offset + 1, stackMap);
+        stackMap[offset] += newBottom.height;
+      }
+      heightWithBottom = stackMap[offset];
+    }
+    /* Without this bottom */
+    int heightWithoutBottom = createStack2(boxes, bottom, offset + 1, stackMap);
+
+    /* Return better of two options */
+    return Math.max(heightWithBottom, heightWithoutBottom);
+  }
 }
 
 class BoxComparator implements Comparator<Box> {
