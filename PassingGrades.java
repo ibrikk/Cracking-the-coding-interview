@@ -3,41 +3,20 @@ import java.util.*;
 public class PassingGrades {
   public static void main(String[] args) {
     int[] grades = { 25, 70, 75, 56, 43, 35 };
-    ArrayList<Integer> result = passOrFailBruteForce(grades);
+    ArrayList<Integer> result = passOrFail(grades);
     System.out.println(result);
 
-    int[] result2 = passOrFail(grades);
+    int[] result2 = passOrFailOptimized(grades);
     for (int item : result2) {
-      System.out.println(item);
+      System.out.print(item + " ");
     }
   }
 
-  private static int[] passOrFail(int[] grades) {
-    int left = 0;
-    int right = grades.length - 1;
-
-    while (left < right) {
-      while (left < right && grades[left] < 50) {
-        left++;
-      }
-      while (left < right && grades[right] > 50) {
-        right--;
-      }
-
-      if (grades[left] > grades[right]) {
-        int temp = grades[left];
-        grades[left] = grades[right];
-        grades[right] = temp;
-      }
-    }
-    return grades;
-  }
-
-  private static ArrayList<Integer> passOrFailBruteForce(int[] grades) {
-    ArrayList<Integer> passingGrades = new ArrayList<>();
+  private static ArrayList<Integer> passOrFail(int[] grades) {
     ArrayList<Integer> failingGrades = new ArrayList<>();
+    ArrayList<Integer> passingGrades = new ArrayList<>();
     for (int grade : grades) {
-      if (grade > 50) {
+      if (grade >= 50) {
         passingGrades.add(grade);
       } else {
         failingGrades.add(grade);
@@ -45,5 +24,21 @@ public class PassingGrades {
     }
     failingGrades.addAll(passingGrades);
     return failingGrades;
+  }
+
+  private static int[] passOrFailOptimized(int[] grades) {
+    int[] failedAndPassedInOrder = new int[grades.length];
+    int tempIndex = 0;
+    for (int grade : grades) {
+      if (grade < 50) {
+        failedAndPassedInOrder[tempIndex++] = grade;
+      }
+    }
+    for (int grade : grades) {
+      if (grade >= 50) {
+        failedAndPassedInOrder[tempIndex++] = grade;
+      }
+    }
+    return failedAndPassedInOrder;
   }
 }
