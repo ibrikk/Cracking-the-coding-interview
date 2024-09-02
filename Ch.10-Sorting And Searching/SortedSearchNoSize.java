@@ -33,30 +33,30 @@ public class SortedSearchNoSize {
     }
   }
 
-  private static int search(Listy list, int value) {
+  private static int search(Listy list, int target) {
     int index = 1;
-    // Exponentially increase the index until you go beyond the target value or
+    // Exponentially increase the index until you go beyond the target or
     // reach -1
-    while (list.elementAt(index) != -1 && list.elementAt(index) < value) {
+    while (list.elementAt(index) != -1 && list.elementAt(index) < target) {
       index *= 2;
     }
     // Perform binary search in the determined range
-    return binarySearch(list, value, index / 2, index);
+    return binarySearch(list, target, index / 2, index);
   }
 
-  private static int binarySearch(Listy list, int value, int low, int high) {
+  private static int binarySearch(Listy list, int target, int low, int high) {
     while (low <= high) {
       int mid = (low + high) / 2;
       int middle = list.elementAt(mid);
 
-      if (middle == -1 || middle > value) { // If out of bounds or middle is greater
+      if (middle == -1 || middle > target) { // If out of bounds or middle is greater
         high = mid - 1;
-      } else if (middle < value) {
+      } else if (middle < target) {
         low = mid + 1;
       } else {
-        return mid; // Value found
+        return mid; // target found
       }
     }
-    return -1; // Value not found
+    return -1; // target not found
   }
 }
