@@ -8,6 +8,7 @@ public class SortedMatrixSearch {
     };
 
     System.out.println(findElementBruteForce(matrix, 55));
+    System.out.println(findElement(matrix, 55));
   }
 
   private static boolean findElementBruteForce(int[][] matrix, int elem) {
@@ -25,7 +26,9 @@ public class SortedMatrixSearch {
     return false;
   }
 
-  Coordinate findElement(int[][] matrix, Coordinate origin, Coordinate dest, int x) {
+  // TODO: DO this again at some pint in the future
+
+  private static Coordinate findElement(int[][] matrix, Coordinate origin, Coordinate dest, int x) {
     if (!origin.inbounds(matrix) || !dest.inbounds(matrix)) {
       return null;
     }
@@ -60,7 +63,8 @@ public class SortedMatrixSearch {
     return partitionAndSearch(matrix, origin, dest, start, x);
   }
 
-  Coordinate partitionAndSearch(int[][] matrix, Coordinate origin, Coordinate dest, Coordinate pivot, int x) {
+  private static Coordinate partitionAndSearch(int[][] matrix, Coordinate origin, Coordinate dest, Coordinate pivot,
+      int x) {
     Coordinate lowerLeftOrigin = new Coordinate(pivot.row, origin.column);
     Coordinate lowerLeftDest = new Coordinate(dest.row, pivot.column - 1);
     Coordinate upperRightOrigin = new Coordinate(origin.row, pivot.column);
@@ -73,7 +77,7 @@ public class SortedMatrixSearch {
     return lowerLeft;
   }
 
-  Coordinate findElement(int[][] matrix, int x) {
+  private static Coordinate findElement(int[][] matrix, int x) {
     Coordinate origin = new Coordinate(0, 0);
     Coordinate dest = new Coordinate(matrix.length - 1, matrix[0].length - 1);
     return findElement(matrix, origin, dest, x);
