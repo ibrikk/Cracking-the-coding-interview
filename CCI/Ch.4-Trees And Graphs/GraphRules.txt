@@ -1,0 +1,33 @@
+GRAPHS:
+Simply put, a tree is a connected graph without cycles. A graph is simply a collection of nodes with edges between (some of) them.
+
+• Graphs can be either directed (like the following graph) or undirected. While directed edges are like a
+one-way street, undirected edges are like a two-way street.
+
+• The graph might consist of multiple isolated subgraphs. If there is a path between every pair of vertices,
+it is called a "connected graph:'
+The graph can also have cycles (or not). An "acyclic graph" is one without cycles.
+
+There are two common ways to represent a graph. 
+
+Adjacency List. This is the most common way to represent a graph. Every vertex (or node) stores a list of adjacent vertices.
+In an undirected graph, an edge like (a, b) would be stored twice: once in a's adjacent vertices and once
+in b's adjacent vertices. 
+
+0: 1
+1: 2
+2: 0, 3
+3: 2
+4: 6
+5: 4
+6: 5
+
+Adjacency Matrices. An adjacency matrix is an NxN boolean matrix (where N is the number of nodes), where a true value at
+matrix[ i] [j] indicates an edge from node i to node j. (You can also use an integer matrix with Os and
+1 s.) If the graph is weighted then instead of 0s or 1s you can store the weights. 
+
+Adjacency Lists. Can be an array of linked lists. if 0 points to 3 and 4. 1 points to 5. Then 
+[
+  0: -> 3 -> 4
+  1: -> 5
+]
