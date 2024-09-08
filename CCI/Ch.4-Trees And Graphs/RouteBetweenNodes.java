@@ -1,23 +1,22 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 
+// Define the Node class representing a node in the graph
 class Node {
   private String name;
-  private List<Node> adjacent;
+  private List<Node> neighbors;
   public RouteBetweenNodes.State state;
 
   public Node(String name) {
     this.name = name;
-    adjacent = new ArrayList<>();
+    neighbors = new ArrayList<>();
   }
 
-  public void addAdjacent(Node node) {
-    adjacent.add(node);
+  public void addNeighbor(Node neighbor) {
+    neighbors.add(neighbor);
   }
 
-  public List<Node> getAdjacent() {
-    return adjacent;
+  public List<Node> getNeighbors() {
+    return neighbors;
   }
 
   public String getName() {
@@ -25,8 +24,8 @@ class Node {
   }
 }
 
+// Define the Graph class representing a directed graph
 class Graph {
-
   private List<Node> nodes;
 
   public Graph() {
@@ -42,6 +41,7 @@ class Graph {
   }
 }
 
+// Main class with the solution to find the route between nodes
 public class RouteBetweenNodes {
 
   enum State {
@@ -49,61 +49,66 @@ public class RouteBetweenNodes {
   }
 
   public static void main(String[] args) {
+    // Create a graph and add nodes
     Graph graph = new Graph();
     Node nodeA = new Node("A");
     Node nodeB = new Node("B");
     Node nodeC = new Node("C");
     Node nodeD = new Node("D");
 
-    nodeA.addAdjacent(nodeB);
-    nodeB.addAdjacent(nodeC);
-    nodeC.addAdjacent(nodeD);
+    nodeA.addNeighbor(nodeB);
+    nodeB.addNeighbor(nodeC);
+    nodeC.addNeighbor(nodeD);
 
     graph.addNode(nodeA);
     graph.addNode(nodeB);
     graph.addNode(nodeC);
     graph.addNode(nodeD);
 
+    // Test if there's a route between nodeA and nodeD
     boolean routeExists = search(graph, nodeA, nodeD);
-    System.out.println("Route between A and D exists " + routeExists);
+    System.out.println("Route between A and D exists: " + routeExists);
 
+    // Test if there's a route between nodeA and nodeC
     boolean routeExists2 = search(graph, nodeA, nodeC);
-    System.out.println("Route between A and D exists " + routeExists2);
+    System.out.println("Route between A and C exists: " + routeExists2);
 
+    // Test if there's a route between nodeD and nodeA
     boolean routeExists3 = search(graph, nodeD, nodeA);
-    System.out.println("Route between A and D exists " + routeExists3);
+    System.out.println("Route between D and A exists: " + routeExists3);
   }
 
-  // BFS
-  private static boolean search(Graph g, Node start, Node end) {
-    if (start == end)
+  private static boolean search(Graph graph, Node start, Node end) {
+    if (start == end) {
       return true;
-
-    // operates as Queue
-    LinkedList<Node> q = new LinkedList<>();
-    for (Node u : g.getNodes()) {
-      u.state = State.Unvisited;
     }
+
+    // Initialize a queue for BFS
+    LinkedList<Node> queue = new LinkedList<>();
+    for (Node node : graph.getNodes()) {
+      node.state = State.Unvisited;
+    }
+
     start.state = State.Visiting;
-    q.add(start);
-    Node u;
-    while (!q.isEmpty()) {
-      u = q.removeFirst();
-      if (u != null) {
-        for (Node v : u.getAdjacent()) {
-          if (v.state == State.Unvisited) {
-            if (v == end) {
+    queue.add(start);
+
+    while (!queue.isEmpty()) {
+      Node currentNode = queue.removeFirst();
+      if (currentNode != null) {
+        for (Node neighbor : currentNode.getNeighbors()) {
+          if (neighbor.state == State.Unvisited) {
+            if (neighbor == end) {
               return true;
             } else {
-              v.state = State.Visiting;
-              q.add(v);
+              neighbor.state = State.Visiting;
+              queue.add(neighbor);
             }
           }
         }
-        u.state = State.Visited;
+        currentNode.state = State.Visited;
       }
     }
+
     return false;
   }
-
 }
