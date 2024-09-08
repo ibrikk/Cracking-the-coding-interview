@@ -22,12 +22,58 @@ in b's adjacent vertices.
 5: 4
 6: 5
 
-Adjacency Matrices. An adjacency matrix is an NxN boolean matrix (where N is the number of nodes), where a true value at
-matrix[ i] [j] indicates an edge from node i to node j. (You can also use an integer matrix with Os and
-1 s.) If the graph is weighted then instead of 0s or 1s you can store the weights. 
-
 Adjacency Lists. Can be an array of linked lists. if 0 points to 3 and 4. 1 points to 5. Then 
 [
   0: -> 3 -> 4
   1: -> 5
 ]
+
+Adjacency Matrices. An adjacency matrix is an NxN boolean matrix (where N is the number of nodes), where a true value at
+matrix[ i] [j] indicates an edge from node i to node j. (You can also use an integer matrix with Os and
+1 s.) If the graph is weighted then instead of 0s or 1s you can store the weights. 
+
+Graph Search:
+
+DFS and BFS. 
+
+DFS is often preferred if we want to visit every node in the graph. If we want ot find the shortest path (or just any path) between two nodes, BFS is better. 
+
+DFS pseudocode:
+
+void search(Node root) {
+  if (root == null) return;
+  visit(root);
+  root.visited = true;
+  for each (Node n in root.adjacent) {
+    if (n.visited == false) {
+      search(n);
+    }
+  }
+}
+
+BFS pseudocode:
+
+void search(Node root) {
+  Queue queue = new Queue();
+  root.marked = true;
+  queue.enqueue(root); // Add to the end of the queue
+
+  while (!queue.IsEmpty()) {
+    Node r = queue.dequeue(); // Remove from the front of the queue
+    visit(r);
+    foreach (Node n in r.adjacent) {
+      if (n.marked == false) {
+        n.marked = true;
+        queue.enqueue(n);
+      }
+    }
+  }
+}
+
+Bidirectional Search:
+
+Bidirectional search is used to find the shortest path between a source and destination node. It operates by running two simultaneous BFS one from each node. 
+When their searches collide, we have found a path. 
+
+BFS would find the shortest path in k^d but Bidirectional would in k^d/2.
+
