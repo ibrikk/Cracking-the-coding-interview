@@ -18,6 +18,8 @@ public class GridTraversal {
 
     bfs(grid, 0, 0);
 
+    System.out.println();
+
     boolean[][] visited = new boolean[ROWS][COLS];
     
     dfs(grid, 0, 0, visited);
