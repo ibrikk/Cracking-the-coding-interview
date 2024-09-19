@@ -30,7 +30,8 @@ public class GridTraversal {
     Queue<int[]> queue = new LinkedList<>();
 
     visited[startRow][startCol] = true;
-    queue.offer(new int[] { startRow, startCol });
+    int[] enqueue = new int[] { startRow, startCol };
+    queue.offer(enqueue);
 
     while (!queue.isEmpty()) {
       int[] cell = queue.poll();
