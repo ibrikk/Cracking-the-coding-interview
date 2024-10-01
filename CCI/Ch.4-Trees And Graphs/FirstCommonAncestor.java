@@ -97,6 +97,46 @@ public class FirstCommonAncestor {
         return ancestorHelper(childSide, p, q);
     }
 
+    <T> INode<T> commonAncestorWithoutParentOptimized(INode<T> root, INode<T> p, INode<T> q) {
+        Result<T> r = commonAncHelper(root, p, q);
+        if (r.isAncestor) {
+            return r.node;
+        }
+        return null;
+    }
+
+    private static <T> Result<T> commonAncHelper(INode<T> root, INode<T> p, INode<T> q) {
+        if (root == null)
+            return new Result<T>(null, false);
+
+        if (root == p && root == q) {
+            return new Result<T>(root, true);
+        }
+
+        Result<T> rx = commonAncHelper(root.left, p, q);
+        if (rx.isAncestor) {// Found common ancestor
+            return rx;
+        }
+
+        Result<T> ry = commonAncHelper(root.right, p, q);
+        if (ry.isAncestor) {// Found common ancestor
+            return ry;
+        }
+
+        if (rx.node != null && ry.node != null) {
+            return new Result<T>(root, true); // This is the common ancestor
+        } else if (root == p || root == q) {
+            /*
+             * If we're currently at p or q, and we also found one of those nodes in a
+             * subtree, then this is truly an ancestor and the flag should be true.
+             */
+            boolean isAncestor = rx.node != null || ry.node != null;
+            return new Result<T>(root, isAncestor);
+        } else {
+            return new Result<T>(rx.node != null ? rx.node : ry.node, false);
+
+        }
+    }
 }
 
 class INode<T> {
@@ -107,5 +147,15 @@ class INode<T> {
 
     public INode(T data) {
         this.data = data;
+    }
+}
+
+class Result<T> {
+    public INode<T> node;
+    public boolean isAncestor;
+
+    public Result(INode<T> n, boolean isAnc) {
+        node = n;
+        isAncestor = isAnc;
     }
 }
