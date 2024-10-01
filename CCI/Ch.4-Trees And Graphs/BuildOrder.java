@@ -19,8 +19,8 @@ public class BuildOrder {
         if (buildOrder == null) {
             System.out.println("There is a circular dependency, no valid build order.");
         } else {
-            for (Project project : buildOrder) {
-                System.out.print(project.getName() + " ");
+            while (!buildOrder.isEmpty()) {
+                System.out.print(buildOrder.pop().getName() + " ");
             }
         }
 
